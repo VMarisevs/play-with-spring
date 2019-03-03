@@ -1,0 +1,36 @@
+<configuration>
+
+  <conversionRule conversionWord="coloredLevel" converterClass="play.api.libs.logback.ColoredLevel" />
+  <conversionRule conversionWord="tenant" converterClass="com.vm.play.common.LogbackTenantConverter" />
+
+
+  <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>logs/play-with-spring.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <!-- daily rollover -->
+      <fileNamePattern>logs/play-with-spring.%d{yyyy-MM-dd}.log</fileNamePattern>
+
+      <!-- keep 10 days' worth of history -->
+      <maxHistory>10</maxHistory>
+    </rollingPolicy>
+
+    <encoder class="net.logstash.logback.encoder.LogstashEncoder" />
+  </appender>
+
+
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%coloredLevel | %X{correlationId} | %tenant | %logger{15} - %message%n%xException{10}</pattern>
+    </encoder>
+  </appender>
+
+  <logger name="play" level="INFO" />
+  <logger name="application" level="DEBUG" />
+  
+
+  <root level="ERROR">
+    <appender-ref ref="STDOUT" />
+    <appender-ref ref="FILE" />
+  </root>
+
+</configuration>

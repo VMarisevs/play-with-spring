@@ -1,0 +1,4 @@
+
+
+GET    /                  @com.vm.playwspring.controller.HomeController.index()
+GET    /verify            @com.vm.playwspring.controller.HomeController.verify(tenant: Option[java.lang.Integer])
